@@ -1,0 +1,25 @@
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~sweetalert2/src/sweetalert2';
+
+@import 'elements/card';
+@import 'elements/navbar';
+@import 'elements/buttons';
+@import 'elements/transitions';
+
+.formulate-file-image-preview-image{
+  height:70%!important;
+  width: 70% !important;;
+
+}
+.v-card--reveal1 {
+  bottom: 0!important;
+  opacity: 1 !important;
+  position: absolute!important;
+  width: 100%!important;
+}
+ 
+formulate-file-name{
+  height: 10px!important;
+  font-size: 1.5vw!important;
+}
