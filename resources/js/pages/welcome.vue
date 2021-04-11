@@ -138,24 +138,6 @@ export default {
         }
       });
     },
-
-    generate_img(vendor) {
-      if (vendor.user_id) {
-        let user_id = vendor.user_id;
-        let id = vendor.id;
-        if (vendor.images) {
-          let files = vendor.images.split("|");
-          // console.log("files: ", files);
-          //  $file_path = "animal_images/$user_id/$id/$file_number." . $file->getClientOriginalExtension();
-          let url = "animal_images/" + user_id + "/" + id + "/" + files[0];
-          return url;
-        } else {
-          return "https://img.icons8.com/dusk/264/000000/no-image.png";
-        }
-      } else {
-        return "#";
-      }
-    },
     getAllVendors() {
       var axios = require("axios");
       var FormData = require("form-data");
@@ -180,14 +162,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.top-right {
-  position: absolute;
-  right: 10px;
-  top: 18px;
-}
-
-.title {
-  font-size: 85px;
-}
-</style>
+ 

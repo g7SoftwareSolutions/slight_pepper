@@ -74,16 +74,14 @@
           map-type-id="roadmap"
           class="my-auto"
           style="height: 85vh; width: inherit"
-
         >
-        <span    v-for="vendor in this.vendors"
-          :key="vendor.id">
-          <GmapMarker
-            :key="vendor.id"
-            :position="JSON.parse(vendor.location)"
-            :clickable="true"
-            :draggable="true"
-            @click="center = curr_position"
+          <span v-for="vendor in this.vendors" :key="vendor.id">
+            <GmapMarker
+              :key="vendor.id"
+              :position="JSON.parse(vendor.location)"
+              :clickable="true"
+              :draggable="true"
+              @click="center = curr_position"
           /></span>
         </GmapMap>
       </div>
@@ -129,15 +127,6 @@ export default {
     domain: "auth/domain",
   }),
   methods: {
-    filter_vendors(type = "all") {
-      switch (key) {
-        case "name":
-          break;
-
-        default:
-          break;
-      }
-    },
 
     filter_name(name = "") {
       this.vendors = this.all_vendors;
@@ -171,15 +160,4 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.top-right {
-  position: absolute;
-  right: 10px;
-  top: 18px;
-}
-
-.title {
-  font-size: 85px;
-}
-</style>
+ 
