@@ -71,8 +71,8 @@ import { mapGetters } from "vuex";
 
 export default {
   data: () => ({
-    card_height: 350,
-    card_width: 250,
+    card_height: 450,
+    card_width: 350,
     images: null,
   }),
   props: {

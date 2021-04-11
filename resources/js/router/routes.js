@@ -1,4 +1,4 @@
-function page (path) {
+function page(path) {
   return () => import(/* webpackChunkName: '' */ `~/pages/${path}`).then(m => m.default || m)
 }
 
@@ -15,7 +15,6 @@ export default [
 
   { path: '/home', name: 'home', component: page('home.vue') },
   { path: '/user_animals', name: 'user_animals', component: page('user_animals.vue') },
-  { path: '/create_animal_form', name: 'create_animal_form', component: page('create_animal_form.vue') },
   { path: '/create_vendor_form', name: 'create_vendor_form', component: page('create_vendor_form.vue') },
   {
     path: '/settings',

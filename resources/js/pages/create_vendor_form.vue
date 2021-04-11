@@ -381,7 +381,7 @@ export default {
           this.pos.lat +
           "," +
           this.pos.lng +
-          "&key=AIzaSyCNj9uW7pmea0-sCs1Un4F4JxMXDLNEaTk",
+          window.config.google_api_key,
         headers: {},
       };
 

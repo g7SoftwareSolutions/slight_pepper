@@ -87,6 +87,8 @@
           Sorry I cant find any available vendors right now
         </v-alert>
       </v-container>
+            <v-spacer class="m-5 w-100" style="height: 5vh"></v-spacer>
+
     </div>
   </div>
 </template>
@@ -162,4 +164,4 @@ export default {
 };
 </script>
 
- 
+

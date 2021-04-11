@@ -80,11 +80,13 @@
               :key="vendor.id"
               :position="JSON.parse(vendor.location)"
               :clickable="true"
+              icon="images/doubles_icon.png"
               :draggable="true"
-              @click="center = curr_position"
+              @click="this.clickMarker(vendor.id)"
           /></span>
         </GmapMap>
       </div>
+      <v-spacer class="m-5 w-100" style="height: 5vh"></v-spacer>
     </div>
   </div>
 </template>
@@ -96,7 +98,7 @@ export default {
   layout: "basic",
   components: {},
   mounted() {
-    this.getAllVendors();
+    this.getVendors();
   },
   metaInfo() {
     return { title: this.$t("home") };
@@ -127,7 +129,6 @@ export default {
     domain: "auth/domain",
   }),
   methods: {
-
     filter_name(name = "") {
       this.vendors = this.all_vendors;
       this.vendors = this.vendors.filter((item) => {
@@ -137,7 +138,27 @@ export default {
       });
     },
 
-    getAllVendors() {
+    getVendor() {
+      var axios = require("axios");
+      var FormData = require("form-data");
+      var data = new FormData();
+
+      var config = {
+        method: "get",
+        url: (this.domain ? this.domain : "") + "/users/",
+      };
+
+      axios(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+          this.vendors = response.data;
+          this.all_vendors = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    getVendors() {
       var axios = require("axios");
       var FormData = require("form-data");
       var data = new FormData();
@@ -160,4 +181,4 @@ export default {
   },
 };
 </script>
- 
+

@@ -1,14 +1,23 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[5],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/animals_display.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/animals_display.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/home.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/home.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -53,69 +62,128 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    animals: {
-      Type: Object,
-      "default": null
-    }
+  watch: {// dialog:()=>{
+    //   this.get_animals();
+    // }
   },
   data: function data() {
     return {
       reveal: false,
       selected_id: null,
+      animals: [],
       card_height: 350,
       dialog: false,
       card_width: 250
     };
   },
-  mounted: function mounted() {
-    console.log("Animals " + this.animals);
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
+    user: "auth/user",
+    domain: "auth/domain"
+  }),
+  created: function created() {// this.get_animals();
   },
   methods: {
-    generate_img: function generate_img(animal) {
-      user_id = animal.user_id;
-      id = animal.id;
-      files = animal.images.split("|");
-      console.log("files: ", files); //  $file_path = "animal_images/$user_id/$id/$file_number." . $file->getClientOriginalExtension();
+    uploadFile: function uploadFile(file, progress, error, option) {
+      var _this = this;
 
-      $url = "storage/animal_images/" + user_id + "/" + id + "/" + files[0];
-      return $url;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var axios, FormData, data, file_number, config;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+                FormData = __webpack_require__(/*! form-data */ "./node_modules/form-data/lib/browser.js");
+                data = new FormData(); // var encoded_file = await this.toBase64(file);
+
+                file_number = parseInt(_this.user.images == null ? 0 : Object.keys(_this.user.images).length) + 1;
+                data.append("file", file);
+                data.append("file_number", file_number);
+                data.append("user_id", _this.user.id);
+                config = {
+                  method: "post",
+                  url: (_this.domain ? _this.domain : "") + "/api/store_user_image",
+                  data: data
+                };
+                axios(config).then(function (response) {
+                  console.log(JSON.stringify(response.data));
+
+                  if (response.data.status === "success") {
+                    _this.$swal.fire("Success!", "Profile image saved!", "success");
+                  } else {
+                    _this.$swal.fire("Opps!", "Network error, please try again later", "error");
+                  }
+                })["catch"](function (error) {
+                  _this.$swal.fire("Opps!", "Network error, please try again later", "error");
+                });
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    delete_image: function delete_image(id) {
+      var _this2 = this;
+
+      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+      var config = {
+        method: "delete",
+        url: (this.domain ? this.domain : "") + "/users?id=" + this.user.id + "/" + id,
+        headers: {}
+      };
+      axios(config).then(function (response) {
+        // console.log(JSON.stringify(response.data));
+        if (response.data.status === "success") {
+          _this2.get_vendors();
+
+          _this2.$swal.fire("Success!", "Your image was deleted!", "success");
+        } else {
+          _this2.$swal.fire("Opps!", "Network error, please try again later", "error");
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    add_new: function add_new() {
+      this.dialog = true;
+    },
+    update: function update(id) {
+      console.log("clicked update");
+      this.selected_id = id;
+      this.dialog = true;
+    },
+    file_selected: function file_selected(file_number) {
+      console.log(file_number);
+      this.file_number = file_number;
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/animals_display.vue?vue&type=template&id=b13ba1be&":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/animals_display.vue?vue&type=template&id=b13ba1be& ***!
-  \*************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/form-data/lib/browser.js":
+/*!***********************************************!*\
+  !*** ./node_modules/form-data/lib/browser.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* eslint-env browser */
+module.exports = typeof self == 'object' ? self.FormData : window.FormData;
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/home.vue?vue&type=template&id=bb7a9770&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/home.vue?vue&type=template&id=bb7a9770& ***!
+  \**************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -128,215 +196,102 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-container",
-    { attrs: { fluid: "", "justify-center": "" } },
+    "div",
+    {},
     [
-      this.animals
-        ? _c(
-            "v-row",
-            { attrs: { dense: "" } },
-            _vm._l(this.animals, function(animal) {
-              return _c(
-                "v-col",
-                { key: animal.id, staticClass: "my-3" },
-                [
-                  _c(
-                    "v-card",
-                    {
-                      staticClass: "m-auto m-3",
-                      attrs: { height: _vm.card_height, width: _vm.card_width }
-                    },
-                    [
-                      _c(
-                        "v-img",
-                        {
-                          staticClass: "white--text mx-auto",
-                          attrs: {
-                            height: _vm.card_height - 100,
-                            width: _vm.card_width,
-                            src: _vm.generate_img(animal),
-                            "lazy-src": _vm.generate_img(animal),
-                            gradient:
-                              "to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.update(animal.id)
-                            }
+      _c(
+        "v-dialog",
+        {
+          staticClass: "col-lg-6 col-md-8 col-sm-10",
+          attrs: { "max-width": "900", transition: "dialog-bottom-transition" },
+          model: {
+            value: _vm.dialog,
+            callback: function($$v) {
+              _vm.dialog = $$v
+            },
+            expression: "dialog"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("FormulateInput", {
+                staticClass: "input_field text-dark overflow-auto",
+                attrs: {
+                  "label-is-valid-class": "my-valid-class",
+                  type: "image",
+                  height: "150",
+                  width: "150",
+                  uploader: _vm.uploadFile,
+                  name: "file",
+                  color: "primary",
+                  label:
+                    this.user.name + (this.user.name ? "'s" : "") + " Images",
+                  help: "Select a png, jpg or gif to upload.",
+                  validation: "required|mime:image/jpeg,image/png,image/gif"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-card-actions", [
+                _c(
+                  "div",
+                  { staticClass: "row justify-content-center" },
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        staticClass: "mx-auto",
+                        attrs: { text: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.dialog = false
                           }
-                        },
-                        [
-                          _c(
-                            "v-card-subtitle",
-                            { staticClass: "mx-auto text-left" },
-                            [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(
-                                    animal.breed == null
-                                      ? "breed"
-                                      : animal.breed
-                                  )
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "row w-100 mx-auto" },
-                        [
-                          _c(
-                            "v-card-title",
-                            { staticClass: "col-8 text-center mx-auto" },
-                            [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(
-                                    animal.name == null
-                                      ? "Animal Name"
-                                      : animal.name
-                                  )
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-subtitle",
-                            {
-                              staticClass: "mx-auto col-3 text-center",
-                              attrs: { height: "inherit" }
-                            },
-                            [
-                              _vm._v(
-                                "\n            " +
-                                  _vm._s(
-                                    animal.size == null ? "size" : animal.size
-                                  )
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        [
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          animal.gender === "Boy"
-                            ? _c(
-                                "v-btn",
-                                { attrs: { icon: "" } },
-                                [
-                                  _c("v-icon", { attrs: { color: "blue" } }, [
-                                    _vm._v("mdi-gender-male")
-                                  ])
-                                ],
-                                1
-                              )
-                            : animal.gender === "Girl"
-                            ? _c(
-                                "v-btn",
-                                { attrs: { icon: "" } },
-                                [
-                                  _c("v-icon", { attrs: { color: "pink" } }, [
-                                    _vm._v("mdi-gender-female")
-                                  ])
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            { attrs: { icon: "" } },
-                            [
-                              _c("v-icon", { attrs: { color: "teal" } }, [
-                                _vm._v("mdi-information-outline")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          !_vm.user
-                            ? _c(
-                                "v-btn",
-                                { attrs: { icon: "", large: "" } },
-                                [
-                                  _c("v-icon", { attrs: { color: "purple" } }, [
-                                    _vm._v("mdi-bookmark")
-                                  ])
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _c(
-                            "v-btn",
-                            { attrs: { icon: "" } },
-                            [
-                              _c("v-icon", { attrs: { color: "green" } }, [
-                                _vm._v("mdi-share")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("v-spacer"),
-                          _vm._v(" "),
-                          _vm.user
-                            ? _c(
-                                "v-btn",
-                                {
-                                  attrs: { icon: "" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.delete_animal(animal.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("v-icon", { attrs: { color: "red" } }, [
-                                    _vm._v("mdi-delete")
-                                  ])
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            }),
+                        }
+                      },
+                      [_vm._v("Close")]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ],
             1
           )
-        : _c(
-            "v-alert",
-            {
-              attrs: {
-                outlined: "",
-                type: "warning",
-                prominent: "",
-                border: "bottom"
-              }
-            },
-            [_vm._v("\n    Sorry I cant find any available pets right now\n  ")]
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "mx-auto w-100" },
+        [
+          _c("v-card-title", { staticClass: "mx-auto text-primary heading" }, [
+            _vm._v("\n      Manage Profile")
+          ]),
+          _vm._v(" "),
+          _c(
+            "v-container",
+            { attrs: { fluid: "", "justify-center": "" } },
+            [
+              _c(
+                "v-alert",
+                {
+                  attrs: {
+                    outlined: "",
+                    type: "warning",
+                    prominent: "",
+                    border: "bottom"
+                  }
+                },
+                [_vm._v("\n        You have not added any images yet\n      ")]
+              )
+            ],
+            1
           )
+        ],
+        1
+      )
     ],
     1
   )
@@ -348,17 +303,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/pages/animals_display.vue":
-/*!************************************************!*\
-  !*** ./resources/js/pages/animals_display.vue ***!
-  \************************************************/
+/***/ "./resources/js/pages/home.vue":
+/*!*************************************!*\
+  !*** ./resources/js/pages/home.vue ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _animals_display_vue_vue_type_template_id_b13ba1be___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animals_display.vue?vue&type=template&id=b13ba1be& */ "./resources/js/pages/animals_display.vue?vue&type=template&id=b13ba1be&");
-/* harmony import */ var _animals_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./animals_display.vue?vue&type=script&lang=js& */ "./resources/js/pages/animals_display.vue?vue&type=script&lang=js&");
+/* harmony import */ var _home_vue_vue_type_template_id_bb7a9770___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./home.vue?vue&type=template&id=bb7a9770& */ "./resources/js/pages/home.vue?vue&type=template&id=bb7a9770&");
+/* harmony import */ var _home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./home.vue?vue&type=script&lang=js& */ "./resources/js/pages/home.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -368,9 +323,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _animals_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _animals_display_vue_vue_type_template_id_b13ba1be___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _animals_display_vue_vue_type_template_id_b13ba1be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _home_vue_vue_type_template_id_bb7a9770___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _home_vue_vue_type_template_id_bb7a9770___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -380,38 +335,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/animals_display.vue"
+component.options.__file = "resources/js/pages/home.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/animals_display.vue?vue&type=script&lang=js&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/pages/animals_display.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************/
+/***/ "./resources/js/pages/home.vue?vue&type=script&lang=js&":
+/*!**************************************************************!*\
+  !*** ./resources/js/pages/home.vue?vue&type=script&lang=js& ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_animals_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./animals_display.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/animals_display.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_animals_display_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./home.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/home.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/animals_display.vue?vue&type=template&id=b13ba1be&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/pages/animals_display.vue?vue&type=template&id=b13ba1be& ***!
-  \*******************************************************************************/
+/***/ "./resources/js/pages/home.vue?vue&type=template&id=bb7a9770&":
+/*!********************************************************************!*\
+  !*** ./resources/js/pages/home.vue?vue&type=template&id=bb7a9770& ***!
+  \********************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_animals_display_vue_vue_type_template_id_b13ba1be___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./animals_display.vue?vue&type=template&id=b13ba1be& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/animals_display.vue?vue&type=template&id=b13ba1be&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_animals_display_vue_vue_type_template_id_b13ba1be___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_template_id_bb7a9770___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./home.vue?vue&type=template&id=bb7a9770& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/home.vue?vue&type=template&id=bb7a9770&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_template_id_bb7a9770___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_animals_display_vue_vue_type_template_id_b13ba1be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_home_vue_vue_type_template_id_bb7a9770___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

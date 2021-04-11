@@ -13,7 +13,7 @@ Vue.use(VueTelInput);
 Vue.use(VueSweetalert2);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCNj9uW7pmea0-sCs1Un4F4JxMXDLNEaTk',
+    key: window.config.google_api_key,
     region:"tt",
     libraries: 'places', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'

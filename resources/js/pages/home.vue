@@ -31,14 +31,7 @@
       <v-card-title class="mx-auto text-primary heading">
         Manage Profile</v-card-title
       >
-      <AnimalTypeCard
-        v-on:card_clicked="add_new()"
-        v-bind:image="
-          (this.domain ? this.domain : '') + '/images/animals_blue.png'
-        "
-        v-bind:title="$t('Add New')"
-        v-bind:hover_image="'https://img.icons8.com/pastel-glyph/264/000000/plus--v1.png'"
-      ></AnimalTypeCard>
+
 
       <v-container fluid justify-center>
         <v-alert outlined type="warning" prominent border="bottom">
@@ -51,14 +44,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import CreateAnimalForm from "./create_animal_form.vue";
-import AnimalTypeCard from "~/components/AnimalTypeCard";
 
 export default {
-  components: {
-    CreateAnimalForm,
-    AnimalTypeCard,
-  },
+  
   watch: {
     // dialog:()=>{
     //   this.get_animals();

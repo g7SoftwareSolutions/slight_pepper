@@ -4,6 +4,7 @@ $config = [
     'locale' => $locale = app()->getLocale(),
     'locales' => config('app.locales'),
     'githubAuth' => config('services.github.client_id'),
+    'google_api_key' => env('GOOGLE_API_KEY'),
 ];
 @endphp
 <!DOCTYPE html>
