@@ -29,8 +29,16 @@
     </v-dialog>
     <v-card class="mx-auto w-100">
       <v-card-title class="mx-auto text-primary heading">
-        Manage Profile</v-card-title
+        Manage Your Profile</v-card-title
       >
+      <v-btn
+       filled
+       @click="add_new()"
+      color="primary"
+      class="m-3"
+    >
+      Add Image
+    </v-btn>
 
 
       <v-container fluid justify-center>
@@ -46,17 +54,14 @@
 import { mapGetters } from "vuex";
 
 export default {
-  
+
   watch: {
-    // dialog:()=>{
-    //   this.get_animals();
-    // }
+
   },
   data: () => ({
     reveal: false,
     selected_id: null,
-    animals: [],
-    card_height: 350,
+     card_height: 350,
     dialog: false,
     card_width: 250,
   }),
@@ -65,8 +70,7 @@ export default {
     domain: "auth/domain",
   }),
   created() {
-    // this.get_animals();
-  },
+   },
 
   methods: {
     async uploadFile(file, progress, error, option) {

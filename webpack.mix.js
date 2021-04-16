@@ -16,8 +16,10 @@ if (mix.inProduction()) {
     // .version() // Use `laravel-mix-versionhash` for the generating correct Laravel Mix manifest file.
     .versionHash()
 } else {
-  mix.sourceMaps()
+  // mix.sourceMaps()
 }
+
+
 
 mix.webpackConfig({
   plugins: [
@@ -29,6 +31,7 @@ mix.webpackConfig({
       '~': path.join(__dirname, './resources/js')
     }
   },
+
   output: {
     chunkFilename: 'dist/js/[chunkhash].js',
     path: mix.config.hmr
@@ -43,8 +46,10 @@ mix.then(() => {
   }
 })
 
-function publishAseets () {
-  const publicDir = path.resolve(__dirname, './public')
+function publishAseets() {
+  console.log(__dirname);
+  let path = path.resolve(__dirname, './public')
+  const publicDir = path
 
   fs.removeSync(path.join(publicDir, 'dist'))
   fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'))

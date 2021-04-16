@@ -46,7 +46,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon @click="$emit('delete')" color="teal"
           >mdi-information-outline</v-icon
         >
@@ -60,7 +60,7 @@
 
       <v-btn icon>
         <v-icon color="green">mdi-share</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-spacer></v-spacer>
     </v-card-actions>
   </v-card>
