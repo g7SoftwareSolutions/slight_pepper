@@ -33,10 +33,10 @@
               <v-img
                 contain
                 :lazy-src="
-                  (this.domain ? this.domain : '') + '/images/shelter_blue.png'
+                  (this.domain ? this.domain : '') + '/images/doubles1.png'
                 "
                 :src="
-                  (this.domain ? this.domain : '') + '/images/shelter_blue.png'
+                  (this.domain ? this.domain : '') + '/images/doubles1.png'
                 "
                 max-height="200"
               ></v-img>
@@ -116,11 +116,11 @@
                 contain
                 :lazy-src="
                   (this.domain ? this.domain : '') +
-                  '/images/shelter_purple.png'
+                  '/images/doubles1.png'
                 "
                 :src="
                   (this.domain ? this.domain : '') +
-                  '/images/shelter_purple.png'
+                  '/images/doubles1.png'
                 "
                 max-height="200"
               ></v-img>
@@ -170,10 +170,10 @@
               <v-img
                 contain
                 :lazy-src="
-                  (this.domain ? this.domain : '') + '/images/shelter_green.png'
+                  (this.domain ? this.domain : '') + '/images/doubles1.png'
                 "
                 :src="
-                  (this.domain ? this.domain : '') + '/images/shelter_green.png'
+                  (this.domain ? this.domain : '') + '/images/doubles1.png'
                 "
                 max-height="200"
               ></v-img>
